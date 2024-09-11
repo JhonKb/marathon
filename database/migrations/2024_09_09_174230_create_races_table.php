@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('day');
             $table->time('time');
             $table->integer('turns');
-            $table->decimal('total_route_km', 2,1);
+            $table->decimal('total_distance_km', 3,1);
             $table->string('status');
             $table->text('description');
             $table->timestamps();

@@ -16,7 +16,7 @@ class Race extends Model
         'day',
         'time',
         'turns',
-        'total_route_km',
+        'total_distance_km',
         'status',
         'description'
     ];

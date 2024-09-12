@@ -41,16 +41,32 @@ Copy the .env
 cp .env.example .env
 ```
 
-Up and Build the containers
+Up containers
 ```bash
 docker-compose up --build -d
 ```
 > This process may take a while. Wait until the end.<br>
 > In case of error, check the ports in [docker-compose.yml](docker-compose.yml) and change them if necessary
 
+Enter in docker bash
+```bash
+docker-compose exec laravel.test bash
+```
+
+In bash, install dependencies
+```bash
+composer install
+```
+
 Generate the key
 ```bash
-./vendor/bin/sail art key:generate
+php artisan key:generate
+```
+> Close bash with Ctrl+D
+
+Build docker images
+```bash
+./vendor/bin/sail up --build -d
 ```
 
 Run database migrations and seeders(optional)

@@ -13,8 +13,7 @@ class Race extends Model
 
     protected $fillable = [
         'name',
-        'day',
-        'time',
+        'date_time',
         'turns',
         'total_distance_km',
         'status',

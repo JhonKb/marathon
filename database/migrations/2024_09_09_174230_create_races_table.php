@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('races', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date('day');
-            $table->time('time');
+            $table->dateTime('date_time');
             $table->integer('turns');
             $table->decimal('total_distance_km', 3,1);
-            $table->string('status');
-            $table->text('description');
+            $table->string('status')->default('Open Registrations');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

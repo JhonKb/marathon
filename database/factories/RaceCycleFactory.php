@@ -16,10 +16,8 @@ class RaceCycleFactory extends Factory
      */
     public function definition(): array
     {
-        $startRace = fake()->dateTimeBetween('-3 months');
-
         return [
-            'start_race' => $startRace,
+            //
         ];
     }
 }

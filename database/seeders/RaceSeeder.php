@@ -23,14 +23,18 @@ class RaceSeeder extends Seeder
             ]);
 
             if ($race->status !== 'Closed Registrations') {
-                break;
+                continue;
             }
+
+            $raceDateTime = $race->date_time;
+            $maxStartRace = (clone $raceDateTime)->modify('+30 minutes');
 
             $raceCycle = RaceCycle::factory()->create([
                 'race_id' => $race->id,
+                'start_race' => fake()->dateTimeBetween($raceDateTime, $maxStartRace)
             ]);
 
-            $this->callWith(RaceResultSeeder::class, ['race' => $race, 'inscriptions' => $inscriptions, 'raceCycle' => $raceCycle]);
+            $this->callWith(RaceResultSeeder::class, ['race1' => $race, 'inscriptions1' => $inscriptions, 'raceCycle1' => $raceCycle]);
         }
     }
 }

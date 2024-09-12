@@ -10,14 +10,12 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RaceResource extends Resource
 {
     protected static ?string $model = Race::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bolt';
 
     public static function form(Form $form): Form
     {
@@ -26,10 +24,9 @@ class RaceResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('day')
-                    ->required(),
-                Forms\Components\TextInput::make('time')
-                    ->required(),
+                Forms\Components\DateTimePicker::make('date_time')
+                    ->required()
+                    ->minDate(now()),
                 Forms\Components\TextInput::make('turns')
                     ->required()
                     ->numeric(),
@@ -40,7 +37,7 @@ class RaceResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
-                    ->required()
+                    ->nullable()
                     ->columnSpanFull(),
             ]);
     }
@@ -51,10 +48,9 @@ class RaceResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('day')
-                    ->date()
+                Tables\Columns\TextColumn::make('date_time')
+                    ->date('d/m/Y H:i')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('time'),
                 Tables\Columns\TextColumn::make('turns')
                     ->numeric()
                     ->sortable(),

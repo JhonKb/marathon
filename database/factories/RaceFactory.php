@@ -16,13 +16,16 @@ class RaceFactory extends Factory
      */
     public function definition(): array
     {
+        $dateTime = fake()->dateTimeBetween('-3 months', '+3 months')->setTime(fake()->numberBetween(6,20), 0);
+        $now = new \DateTime();
+        $status = ($dateTime > $now) ? 'Open Registrations' : 'Closed Registrations';
+
         return [
             'name' => fake()->unique()->word(),
-            'day' => fake()->date(),
-            'time' => fake()->time('H:i'),
+            'date_time' => $dateTime,
             'turns' => fake()->randomDigitNotZero(),
             'total_distance_km' => fake()->randomFloat(1, 5, 50),
-            'status' => fake()->randomElement(['Closed Registrations']),
+            'status' => $status,
             'description' => fake()->paragraph(),
         ];
     }

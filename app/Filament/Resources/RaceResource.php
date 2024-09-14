@@ -17,6 +17,15 @@ class RaceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-bolt';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $navigationGroup = 'Management';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -33,9 +42,6 @@ class RaceResource extends Resource
                 Forms\Components\TextInput::make('total_distance_km')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->nullable()
                     ->columnSpanFull(),
@@ -58,7 +64,12 @@ class RaceResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                    ->searchable()
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'Open Registrations' => 'success',
+                        'Closed Registrations' => 'danger',
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -72,7 +83,11 @@ class RaceResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -92,8 +107,6 @@ class RaceResource extends Resource
     {
         return [
             'index' => Pages\ListRaces::route('/'),
-            'create' => Pages\CreateRace::route('/create'),
-            'edit' => Pages\EditRace::route('/{record}/edit'),
         ];
     }
 }

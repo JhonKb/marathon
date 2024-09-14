@@ -5,31 +5,26 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RaceCycleResource\Pages;
 use App\Filament\Resources\RaceCycleResource\RelationManagers;
 use App\Models\RaceCycle;
-use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RaceCycleResource extends Resource
 {
     protected static ?string $model = RaceCycle::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-path';
 
-    public static function form(Form $form): Form
+    protected static ?string $navigationGroup = 'Management';
+
+    public static function getNavigationBadge(): ?string
     {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('race_id')
-                    ->relationship('race', 'name')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('start_race')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('end_race'),
-            ]);
+        return static::getModel()::count();
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 
     public static function table(Table $table): Table
@@ -58,7 +53,7 @@ class RaceCycleResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -78,8 +73,6 @@ class RaceCycleResource extends Resource
     {
         return [
             'index' => Pages\ListRaceCycles::route('/'),
-            'create' => Pages\CreateRaceCycle::route('/create'),
-            'edit' => Pages\EditRaceCycle::route('/{record}/edit'),
         ];
     }
 }

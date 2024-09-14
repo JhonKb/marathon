@@ -20,8 +20,11 @@ class RaceFactory extends Factory
         $now = new \DateTime();
         $status = ($dateTime > $now) ? 'Open Registrations' : 'Closed Registrations';
 
+        $title = fake()->unique()->jobTitle();
+        $name = ucfirst($title) . ' Race';
+
         return [
-            'name' => fake()->unique()->word(),
+            'name' => $name,
             'date_time' => $dateTime,
             'turns' => fake()->randomDigitNotZero(),
             'total_distance_km' => fake()->randomFloat(1, 5, 50),

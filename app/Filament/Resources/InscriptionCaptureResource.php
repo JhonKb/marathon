@@ -2,16 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RaceResultResource\Pages;
-use App\Filament\Resources\RaceResultResource\RelationManagers;
+use App\Filament\Resources\InscriptionCaptureResource\Pages;
+use App\Filament\Resources\InscriptionCaptureResource\RelationManagers;
 use App\Models\InscriptionCapture;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InscriptionCaptureResource extends Resource
 {
@@ -21,9 +19,23 @@ class InscriptionCaptureResource extends Resource
 
     protected static ?string $navigationGroup = 'Management';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function canCreate(): bool
     {
         return false;
+    }
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Select::make('race')
+                    ->relationship('race', 'name')
+            ]);
     }
 
     public static function table(Table $table): Table

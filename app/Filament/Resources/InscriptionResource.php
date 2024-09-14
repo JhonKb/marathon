@@ -17,9 +17,14 @@ class InscriptionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-pencil';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     protected static ?string $navigationGroup = 'Management';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -66,6 +71,24 @@ class InscriptionResource extends Resource
                 //
             ])
             ->actions([
+                 Tables\Actions\Action::make('viewQrCode')
+                    ->label('QR Code')
+                    ->icon('heroicon-o-qr-code')
+                    ->button()
+                    ->modalDescription(fn($record) => $record->name)
+                    ->modalContent(fn($record) => view('inscriptions.view-qr-code',
+                        ['record' => $record]))
+                    ->modalCancelAction(false)
+                    ->modalWidth('fit')
+                    ->modalAlignment('center')
+                    ->modalFooterActionsAlignment('center')
+                    ->modalSubmitAction(false)
+                    ->extraModalFooterActions([
+                        Tables\Actions\Action::make('downloadPdf')
+                            ->label('Download PDF')
+                            ->url(fn($record) => route('download.pdf', $record->id))
+                            ->close()
+                    ]),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
@@ -90,7 +113,6 @@ class InscriptionResource extends Resource
     {
         return [
             'index' => Pages\ListInscriptions::route('/'),
-            'create' => Pages\CreateInscription::route('/create'),
         ];
     }
 }

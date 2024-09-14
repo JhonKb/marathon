@@ -23,8 +23,8 @@ class Inscription extends Model
         return $this->belongsTo(Race::class);
     }
 
-    public function inscriptionCaptures(): HasMany
+    public function qrCodeCaptures(): HasMany
     {
-        return $this->hasMany(InscriptionCapture::class);
+        return $this->hasMany(QrCodeCapture::class);
     }
 }

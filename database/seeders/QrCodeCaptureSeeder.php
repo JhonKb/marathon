@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\InscriptionCapture;
+use App\Models\QrCodeCapture;
 use Illuminate\Database\Seeder;
 
-class InscriptionCaptureSeeder extends Seeder
+class QrCodeCaptureSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -30,7 +30,7 @@ class InscriptionCaptureSeeder extends Seeder
                 $captureInstant = (clone $previousCaptureInstant)->modify('+' . (int)$timePerTurn . ' minutes');
                 $turnResult = $captureInstant->diff($previousCaptureInstant);
 
-                InscriptionCapture::factory()->create([
+                QrCodeCapture::factory()->create([
                     'race_id' => $inscription->race_id,
                     'inscription_id' => $inscription->id,
                     'turn' => $turn,

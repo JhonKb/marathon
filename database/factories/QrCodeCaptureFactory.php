@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\InscriptionCapture>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\QrCodeCapture>
  */
-class InscriptionCaptureFactory extends Factory
+class QrCodeCaptureFactory extends Factory
 {
     /**
      * Define the model's default state.

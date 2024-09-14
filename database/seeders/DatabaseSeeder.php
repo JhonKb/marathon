@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Inscription;
 use App\Models\Race;
 use App\Models\RaceCycle;
-use App\Models\InscriptionCapture;
+use App\Models\QrCodeCapture;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;

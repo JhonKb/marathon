@@ -30,8 +30,8 @@ class Race extends Model
         return $this->hasOne(RaceCycle::class);
     }
 
-    public function inscriptionCaptures(): HasMany
+    public function qrCodeCaptures(): HasMany
     {
-        return $this->hasMany(InscriptionCapture::class);
+        return $this->hasMany(QrCodeCapture::class);
     }
 }

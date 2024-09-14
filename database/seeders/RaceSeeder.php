@@ -34,7 +34,7 @@ class RaceSeeder extends Seeder
                 'start_race' => fake()->dateTimeBetween($raceDateTime, $maxStartRace)
             ]);
 
-            $this->callWith(InscriptionCaptureSeeder::class, ['race1' => $race, 'inscriptions1' => $inscriptions, 'raceCycle1' => $raceCycle]);
+            $this->callWith(QrCodeCaptureSeeder::class, ['race1' => $race, 'inscriptions1' => $inscriptions, 'raceCycle1' => $raceCycle]);
         }
     }
 }

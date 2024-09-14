@@ -2,18 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InscriptionCaptureResource\Pages;
-use App\Filament\Resources\InscriptionCaptureResource\RelationManagers;
-use App\Models\InscriptionCapture;
+use App\Filament\Resources\QrCodeCaptureResource\Pages;
+use App\Filament\Resources\QrCodeCaptureResource\RelationManagers;
+use App\Models\QrCodeCapture;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class InscriptionCaptureResource extends Resource
+class QrCodeCaptureResource extends Resource
 {
-    protected static ?string $model = InscriptionCapture::class;
+    protected static ?string $model = QrCodeCapture::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
 
@@ -87,7 +87,7 @@ class InscriptionCaptureResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInscriptionCaptures::route('/'),
+            'index' => Pages\ListQRCodeCaptures::route('/'),
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\RaceResult;
+use App\Models\InscriptionCapture;
 use Illuminate\Database\Seeder;
 
-class RaceResultSeeder extends Seeder
+class InscriptionCaptureSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -30,7 +30,7 @@ class RaceResultSeeder extends Seeder
                 $captureInstant = (clone $previousCaptureInstant)->modify('+' . (int)$timePerTurn . ' minutes');
                 $turnResult = $captureInstant->diff($previousCaptureInstant);
 
-                RaceResult::factory()->create([
+                InscriptionCapture::factory()->create([
                     'race_id' => $inscription->race_id,
                     'inscription_id' => $inscription->id,
                     'turn' => $turn,

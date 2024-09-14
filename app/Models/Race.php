@@ -30,8 +30,8 @@ class Race extends Model
         return $this->hasOne(RaceCycle::class);
     }
 
-    public function raceResults(): HasMany
+    public function inscriptionCaptures(): HasMany
     {
-        return $this->hasMany(RaceResult::class);
+        return $this->hasMany(InscriptionCapture::class);
     }
 }

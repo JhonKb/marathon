@@ -10,14 +10,16 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InscriptionResource extends Resource
 {
     protected static ?string $model = Inscription::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-pencil';
+
+    protected static ?string $navigationGroup = 'Management';
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
@@ -31,7 +33,7 @@ class InscriptionResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('cpf')
                     ->required()
-                    ->maxLength(255),
+                    ->mask('999.999.999-99'),
                 Forms\Components\DatePicker::make('birthdate')
                     ->required(),
             ]);
@@ -64,7 +66,11 @@ class InscriptionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ViewAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -85,7 +91,6 @@ class InscriptionResource extends Resource
         return [
             'index' => Pages\ListInscriptions::route('/'),
             'create' => Pages\CreateInscription::route('/create'),
-            'edit' => Pages\EditInscription::route('/{record}/edit'),
         ];
     }
 }

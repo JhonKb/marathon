@@ -23,8 +23,8 @@ class Inscription extends Model
         return $this->belongsTo(Race::class);
     }
 
-    public function raceResult(): HasMany
+    public function inscriptionCaptures(): HasMany
     {
-        return $this->hasMany(RaceResult::class);
+        return $this->hasMany(InscriptionCapture::class);
     }
 }

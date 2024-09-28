@@ -14,20 +14,18 @@ class Race extends Model
     protected $fillable = [
         'name',
         'date_time',
-        'turns',
+        'laps',
+        'checkpoints',
         'total_distance_km',
         'status',
-        'description'
+        'description',
+        'start_race',
+        'end_race',
     ];
 
     public function inscriptions(): HasMany
     {
         return $this->hasMany(Inscription::class);
-    }
-
-    public function raceCycle():HasOne
-    {
-        return $this->hasOne(RaceCycle::class);
     }
 
     public function qrCodeCaptures(): HasMany

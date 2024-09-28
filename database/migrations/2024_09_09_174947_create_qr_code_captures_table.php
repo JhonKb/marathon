@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,9 +14,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('race_id')->constrained()->cascadeOnDelete();
             $table->foreignId('inscription_id')->constrained('inscriptions')->cascadeOnDelete();
-            $table->integer('turn');
-            $table->datetime('capture_instant');
-            $table->time('turn_result');
+            $table->integer('lap');
+            $table->integer('checkpoint');
+            $table->datetime('capture_instant', 3);
+            $table->time('time', 3);
             $table->timestamps();
         });
     }

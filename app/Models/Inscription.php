@@ -27,4 +27,9 @@ class Inscription extends Model
     {
         return $this->hasMany(QrCodeCapture::class);
     }
+
+    public function calculateTotalTime()
+    {
+         return QrCodeCapture::query()->where('inscription_id', $this->id)->sum('time') ?? null;
+    }
 }

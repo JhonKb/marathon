@@ -13,9 +13,10 @@ class QrCodeCapture extends Model
     protected $fillable = [
         'race_id',
         'inscription_id',
-        'turn',
+        'lap',
+        'checkpoint',
         'capture_instant',
-        'turn_result'
+        'time'
     ];
 
     public function race(): BelongsTo

@@ -12,9 +12,9 @@ class PdfQrCodeController extends Controller
     {
         $record = Inscription::find($id);
 
-        $qrCode = base64_encode(QrCode::format('png')->size(700)->generate(json_encode(['race-id' => $record->race->id, 'id' => $record->id, 'name' => $record->name])));
+        $qrCode = base64_encode(QrCode::format('png')->size(700)->generate(json_encode([ 'id' => $record->id, 'race-id' => $record->race->id, 'name' => $record->name])));
 
-        $pdf = Pdf::loadView('inscriptions.view-qr-code-download', ['qrCode' => $qrCode]);
+        $pdf = Pdf::loadView('qr-code.pdf-view', ['qrCode' => $qrCode]);
 
         $pdf->setPaper('A4');
 

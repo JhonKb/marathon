@@ -19,7 +19,7 @@ class InscriptionResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Management';
+    protected static ?string $navigationGroup = 'Runners';
 
     public static function getNavigationBadge(): ?string
     {
@@ -74,9 +74,9 @@ class InscriptionResource extends Resource
                  Tables\Actions\Action::make('viewQrCode')
                     ->label('QR Code')
                     ->icon('heroicon-o-qr-code')
-                    ->button()
+                    ->iconButton()
                     ->modalDescription(fn($record) => $record->name)
-                    ->modalContent(fn($record) => view('inscriptions.view-qr-code',
+                    ->modalContent(fn($record) => view('qr-code.modal-view',
                         ['record' => $record]))
                     ->modalCancelAction(false)
                     ->modalWidth('fit')

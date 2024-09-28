@@ -19,7 +19,7 @@ class RaceResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Management';
+    protected static ?string $navigationGroup = 'Races';
 
     public static function getNavigationBadge(): ?string
     {
@@ -36,12 +36,22 @@ class RaceResource extends Resource
                 Forms\Components\DateTimePicker::make('date_time')
                     ->required()
                     ->minDate(now()),
-                Forms\Components\TextInput::make('turns')
+                Forms\Components\TextInput::make('laps')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('checkpoints')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('total_distance_km')
                     ->required()
                     ->numeric(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                            'Open Inscriptions',
+                            'Closed Inscription',
+                            'In Progress',
+                            'Finished']
+                    ),
                 Forms\Components\Textarea::make('description')
                     ->nullable()
                     ->columnSpanFull(),
@@ -57,7 +67,10 @@ class RaceResource extends Resource
                 Tables\Columns\TextColumn::make('date_time')
                     ->date('d/m/Y H:i')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('turns')
+                Tables\Columns\TextColumn::make('laps')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('checkpoints')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_distance_km')
@@ -67,8 +80,10 @@ class RaceResource extends Resource
                     ->searchable()
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'Open Registrations' => 'success',
-                        'Closed Registrations' => 'danger',
+                        'Open Inscriptions' => 'success',
+                        'Closed Inscriptions' => 'warning',
+                        'In Progress' => 'info',
+                        'Finished' => 'danger',
                     }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

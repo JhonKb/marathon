@@ -5,8 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\QrCodeCaptureResource\Pages;
 use App\Filament\Resources\QrCodeCaptureResource\RelationManagers;
 use App\Models\QrCodeCapture;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -15,9 +13,9 @@ class QrCodeCaptureResource extends Resource
 {
     protected static ?string $model = QrCodeCapture::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-trophy';
+    protected static ?string $navigationIcon = 'heroicon-o-check-badge';
 
-    protected static ?string $navigationGroup = 'Management';
+    protected static ?string $navigationGroup = 'Results';
 
     public static function getNavigationBadge(): ?string
     {
@@ -27,15 +25,6 @@ class QrCodeCaptureResource extends Resource
     public static function canCreate(): bool
     {
         return false;
-    }
-
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Select::make('race')
-                    ->relationship('race', 'name')
-            ]);
     }
 
     public static function table(Table $table): Table
@@ -48,13 +37,16 @@ class QrCodeCaptureResource extends Resource
                 Tables\Columns\TextColumn::make('inscription.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('turn')
+                Tables\Columns\TextColumn::make('lap')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('checkpoint')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('capture_instant')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('turn_result'),
+                Tables\Columns\TextColumn::make('time'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

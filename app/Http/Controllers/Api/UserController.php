@@ -27,7 +27,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a new user
+     * Store new user
      * @param UserRequest $request
      * @return JsonResponse
      */
@@ -61,7 +61,7 @@ class UserController extends Controller
     }
 
     /**
-     * Shows a user
+     * Shows user
      * @param User $user
      * @return JsonResponse
      */
@@ -74,7 +74,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update a user
+     * Update user
      * @param UserRequest $request
      * @param User $user
      * @return JsonResponse
@@ -109,7 +109,7 @@ class UserController extends Controller
     }
 
     /**
-     * Delete a user
+     * Delete user
      * @param User $user
      * @return JsonResponse
      */

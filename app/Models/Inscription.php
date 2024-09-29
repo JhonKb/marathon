@@ -18,18 +18,55 @@ class Inscription extends Model
         'birthdate'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function race(): BelongsTo
     {
         return $this->belongsTo(Race::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function qrCodeCaptures(): HasMany
     {
         return $this->hasMany(QrCodeCapture::class);
     }
 
-    public function calculateTotalTime()
+    /**
+     * @return string
+     */
+    public function calculateTotalTime(): string
     {
-         return QrCodeCapture::query()->where('inscription_id', $this->id)->sum('time') ?? null;
+        $totalMilliseconds = $this->qrCodeCaptures->reduce(function ($carry, $capture) {
+        list($hours, $minutes, $seconds, $milliseconds) = sscanf($capture->time, '%d:%d:%d.%d');
+        return $carry + ($hours * 3600000) + ($minutes * 60000) + ($seconds * 1000) + $milliseconds;
+    }, 0);
+
+    $hours = floor($totalMilliseconds / 3600000);
+    $minutes = floor(($totalMilliseconds % 3600000) / 60000);
+    $seconds = floor(($totalMilliseconds % 60000) / 1000);
+    $milliseconds = $totalMilliseconds % 1000;
+
+    return sprintf('%02d:%02d:%02d.%03d', $hours, $minutes, $seconds, $milliseconds);
+    }
+
+    /**
+     * @return int
+     */
+    public function getLastCheckpointCaptured(): int
+    {
+        $lastCapture = $this->qrCodeCaptures()->latest()->first();
+        return $lastCapture ? $lastCapture->checkpoint: 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLastLapCaptured(): int
+    {
+        $lastCapture = $this->qrCodeCaptures()->latest()->first();
+        return $lastCapture ? $lastCapture->lap: 0;
     }
 }

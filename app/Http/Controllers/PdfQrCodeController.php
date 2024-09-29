@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Inscription;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Response;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PdfQrCodeController extends Controller
 {
-     public function downloadPdf($id)
+    /**
+     * @param $id
+     * @return Response
+     */
+    public function downloadPdf($id)
     {
         $record = Inscription::find($id);
 

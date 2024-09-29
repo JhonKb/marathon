@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class QrCodeCapture extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'race_id',
         'inscription_id',
@@ -19,11 +17,17 @@ class QrCodeCapture extends Model
         'time'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function race(): BelongsTo
     {
         return $this->belongsTo(Race::class);
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function inscription(): BelongsTo
     {
         return $this->belongsTo(Inscription::class);

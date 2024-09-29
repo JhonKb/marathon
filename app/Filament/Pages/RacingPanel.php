@@ -14,6 +14,9 @@ class RacingPanel extends Page
 
     protected static string $view = 'filament.pages.racing-panel';
 
+    /**
+     * @return Collection
+     */
     public function getRaces(): Collection
     {
         return Race::all();

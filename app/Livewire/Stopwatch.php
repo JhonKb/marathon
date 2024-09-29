@@ -18,11 +18,17 @@ class Stopwatch extends Component
 
     protected $listeners = ['startTimer' => 'start'];
 
+    /**
+     * @return Application|Factory|View|\Illuminate\View\View
+     */
     public function render(): Application|Factory|View|\Illuminate\View\View
     {
         return view('livewire.stopwatch');
     }
 
+    /**
+     * @return void
+     */
     public function start(): void
     {
         $this->running = true;

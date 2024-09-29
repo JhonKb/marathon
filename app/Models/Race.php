@@ -23,11 +23,17 @@ class Race extends Model
         'end_race',
     ];
 
+    /**
+     * @return HasMany
+     */
     public function inscriptions(): HasMany
     {
         return $this->hasMany(Inscription::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function qrCodeCaptures(): HasMany
     {
         return $this->hasMany(QrCodeCapture::class);

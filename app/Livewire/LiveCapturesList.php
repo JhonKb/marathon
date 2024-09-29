@@ -19,13 +19,49 @@ class LiveCapturesList extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
+    /**
+     * @var
+     */
+    public $raceId;
+
+    /**
+     * @var string[]
+     */
+    protected $listeners = ['refreshList' => '$refresh'];
+
+    /**
+     * @param $raceId
+     * @return void
+     */
+    public function mount($raceId): void
+    {
+        $this->raceId = $raceId;
+    }
+
+    /**
+     * @return Application|Factory|View
+     */
+    public function render(): Application|Factory|View
+    {
+        return view('livewire.live-captures-list');
+    }
+
+    /**
+     * @param Table $table
+     * @return Table
+     */
     public function table(Table $table): Table
     {
         return $table
             ->query(Inscription::query()->where('race_id', $this->raceId))
             ->columns([
                 TextColumn::make('name'),
-                TextColumn::make('total_time')->getStateUsing(fn ($record) => $record->calculateTotalTime())->dateTime('H:i:s.u'),
+                TextColumn::make('last_lap')->getStateUsing(fn($record) => $record->getLastLapCaptured())
+                    ->alignCenter(),
+                TextColumn::make('last_checkpoint')->getStateUsing(fn($record) => $record->getLastCheckpointCaptured())
+                    ->alignCenter(),
+                TextColumn::make('total_time')->getStateUsing(fn($record) => $record->calculateTotalTime())->time('H:i:s.u')
+                    ->alignCenter(),
             ])
             ->filters([
                 // ...
@@ -36,19 +72,5 @@ class LiveCapturesList extends Component implements HasForms, HasTable
             ->bulkActions([
                 // ...
             ]);
-    }
-
-    public $raceId;
-
-    protected $listeners = ['refreshList' => '$refresh'];
-
-    public function mount($raceId): void
-    {
-        $this->raceId = $raceId;
-    }
-
-    public function render(): Application|Factory|View
-    {
-        return view('livewire.live-captures-list');
     }
 }

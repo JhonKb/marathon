@@ -1,26 +1,26 @@
-<!-- resources/views/livewire/cronometro.blade.php -->
 <div>
-    <div class="flex justify-end items-center space-x-4">
-        <button wire:click="$emit('startTimer')" class="btn btn-primary">Iniciar</button>
-        <div id="timer" class="text-lg">
-            {{ sprintf('%02d:%02d:%02d:%03d', $hours, $minutes, $seconds, $milliseconds) }}
+    <div class="flex justify-between items-center pb-6">
+        <div class="space-x-4">
+            <x-filament::button wire:click="{{ $this->running ? 'stopTimer' : 'startTimer' }}"
+                                color="{{ $this->running ? 'gray' : 'primary' }}" class="w-32 h-10 m"
+                                icon="{{ $this->running ? 'heroicon-s-pause' : 'heroicon-s-play' }}">{{ $this->running ? 'Pause' : 'Start' }}
+            </x-filament::button>
+            @if($this->started)
+                <x-filament::button wire:click="resetTimer" class="w-32 h-10 mx-3" icon="heroicon-s-stop">
+                    Reset
+                </x-filament::button>
+            @endif
         </div>
+        <h1 class="text-3xl w-72 text-justify">{{ sprintf('%02d : %02d : %02d : %02d', $hours, $minutes, $seconds, $milliseconds) }}</h1>
     </div>
 </div>
 
 <script>
-    document.addEventListener('livewire:load', function () {
-        let timer;
-        window.addEventListener('start-timer', function () {
-            let startTime = Date.now();
-            timer = setInterval(function () {
-                let elapsedTime = Date.now() - startTime;
-                let milliseconds = elapsedTime % 1000;
-                let seconds = Math.floor(elapsedTime / 1000) % 60;
-                let minutes = Math.floor(elapsedTime / 60000) % 60;
-                let hours = Math.floor(elapsedTime / 3600000);
-                Livewire.emit('updateTimer', hours, minutes, seconds, milliseconds);
-            }, 10);
-        });
+    document.addEventListener('livewire:init', function () {
+        setInterval(() => {
+            @this.
+            call('updateTimer');
+        }, 10);
     });
 </script>
+

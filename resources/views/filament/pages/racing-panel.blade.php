@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end mt-6">
-                    <x-filament::button tag="a" href="{{ route('filament.admin.pages.play-race', ['id'=> $race->id]) }}">
+                    <x-filament::button tag="a" href="{{ route('filament.admin.pages.start-race', ['id'=> $race->id]) }}">
                         Start Race
                     </x-filament::button>
                 </div>

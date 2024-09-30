@@ -55,7 +55,8 @@ class LiveCapturesList extends Component implements HasForms, HasTable
         return $table
             ->query(Inscription::query()->where('race_id', $this->raceId))
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                ->label('Runner'),
                 TextColumn::make('last_lap')->getStateUsing(fn($record) => $record->getLastLapCaptured())
                     ->alignCenter(),
                 TextColumn::make('last_checkpoint')->getStateUsing(fn($record) => $record->getLastCheckpointCaptured())
